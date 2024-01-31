@@ -5,6 +5,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.gridlayout.widget.GridLayout
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tvResult: TextView
@@ -13,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private var operand1: Double = 0.0
     private var currentOperand: Double? = null
 
-   override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -73,6 +75,26 @@ class MainActivity : AppCompatActivity() {
         pointButton.setOnClickListener {
             appendPoint()
         }
+
+        val percentButton = findViewById<Button>(R.id.button_percent)
+        percentButton.setOnClickListener {
+            handlePercent()
+        }
+
+        val rootButton = findViewById<Button>(R.id.button_root)
+        rootButton.setOnClickListener {
+            handleRoot()
+        }
+
+        val changeSignButton = findViewById<Button>(R.id.button_change_sign)
+        changeSignButton.setOnClickListener {
+            handleChangeSign()
+        }
+
+        val piButton = findViewById<Button>(R.id.button_Pi)
+        piButton.setOnClickListener {
+            handlePi()
+        }
     }
 
     private fun appendToTextView(text: String) {
@@ -104,15 +126,31 @@ class MainActivity : AppCompatActivity() {
             if (currentOperand != null) {
                 calculateResult()
             }
-            operand1 = currentInput.toString().toDouble()
+            operand1 = parseInput(currentInput.toString())
             currentInput.clear()
             currentOperator = operator
         }
     }
 
+    private fun parseInput(input: String): Double {
+        // Проверяем, содержит ли ввод Pi и обрабатываем соответствующим образом
+        return if (input.contains("Pi")) {
+            input.replace("Pi", kotlin.math.PI.toString()).toDouble()
+        } else {
+            input.toDouble()
+        }
+    }
+
     private fun calculateResult() {
         if (currentInput.isNotEmpty() && currentOperator.isNotEmpty()) {
-            val operand2 = currentInput.toString().toDouble()
+            val operand2 = parseInput(currentInput.toString())
+
+            // Добавим проверку деления на ноль
+            if (currentOperator == "/" && operand2 == 0.0) {
+                tvResult.text = "Делить на ноль нельзя"
+                return
+            }
+
             when (currentOperator) {
                 "+" -> operand1 += operand2
                 "-" -> operand1 -= operand2
@@ -120,19 +158,16 @@ class MainActivity : AppCompatActivity() {
                 "/" -> operand1 /= operand2
             }
 
-            if (operand1 % 1 == 0.0) {
-                currentInput.clear()
-                currentInput.append(operand1.toInt())
-            } else {
-                currentInput.clear()
-                currentInput.append(operand1)
-            }
+            currentInput.clear()
+            currentInput.append(operand1.toString()) // Просто добавляем как строку
 
             currentOperator = ""
-            currentOperand = operand2
+            currentOperand = null
             tvResult.text = currentInput.toString()
         }
     }
+
+
 
     private fun eraseText() {
         if (currentInput.isNotEmpty()) {
@@ -140,5 +175,59 @@ class MainActivity : AppCompatActivity() {
             tvResult.text = currentInput.toString()
         }
     }
-}
 
+    private fun handlePercent() {
+        if (currentInput.isNotEmpty()) {
+            val inputValue = currentInput.toString().toDouble()
+            val result = inputValue / 100
+            currentInput.clear()
+            currentInput.append(result)
+            tvResult.text = currentInput.toString()
+        }
+    }
+
+    private fun handleRoot() {
+        if (currentInput.isNotEmpty()) {
+            val inputValue = currentInput.toString().toDouble()
+            val result = sqrt(inputValue)
+            currentInput.clear()
+            currentInput.append(result)
+            tvResult.text = currentInput.toString()
+        }
+    }
+
+    private fun handleChangeSign() {
+        if (currentInput.isNotEmpty()) {
+            val inputValue = currentInput.toString().toDouble()
+            val result = -inputValue
+
+            if (result % 1 == 0.0) {
+                currentInput.clear()
+                currentInput.append(result.toInt())
+            } else {
+                currentInput.clear()
+                currentInput.append(result)
+            }
+
+            tvResult.text = currentInput.toString()
+        }
+    }
+
+
+    private fun handlePi() {
+        val piValue = kotlin.math.PI
+
+        // Check if Pi is already present in the input
+        if (!currentInput.contains(piValue.toString())) {
+            if (currentInput.isEmpty() || currentInput.toString() == "0") {
+                currentInput.clear()
+                currentInput.append(piValue)
+            } else {
+                currentInput.clear()
+                currentInput.append(" $piValue")
+            }
+
+            tvResult.text = currentInput.toString()
+        }
+    }
+}
