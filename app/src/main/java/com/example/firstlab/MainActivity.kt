@@ -1,5 +1,6 @@
 package com.example.firstlab
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private var currentOperator: String = ""
     private var operand1: Double = 0.0
     private var currentOperand: Double? = null
+    private val history: MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +97,26 @@ class MainActivity : AppCompatActivity() {
         piButton.setOnClickListener {
             handlePi()
         }
+
+        val historyButton = findViewById<Button>(R.id.button_history)
+        historyButton.setOnClickListener {
+            val historyIntent = Intent(this, HistoryActivity::class.java)
+            historyIntent.putExtra("history", generateHistoryString())
+            startActivity(historyIntent)
+        }
+    }
+
+    private fun addToHistory(operation: String) {
+        history.add(operation)
+    }
+
+    // Генерация строки истории
+    private fun generateHistoryString(): String {
+        val stringBuilder = StringBuilder("History:\n")
+        for ((index, operation) in history.withIndex()) {
+            stringBuilder.append("$operation\n")
+        }
+        return stringBuilder.toString()
     }
 
     private fun appendToTextView(text: String) {
@@ -151,21 +173,40 @@ class MainActivity : AppCompatActivity() {
                 return
             }
 
+            var result: Double? = null
+
             when (currentOperator) {
-                "+" -> operand1 += operand2
-                "-" -> operand1 -= operand2
-                "*" -> operand1 *= operand2
-                "/" -> operand1 /= operand2
+                "+" -> result = operand1 + operand2
+                "-" -> result = operand1 - operand2
+                "*" -> result = operand1 * operand2
+                "/" -> {
+                    if (operand2 != 0.0) {
+                        result = operand1 / operand2
+                    }
+                }
             }
 
-            currentInput.clear()
-            currentInput.append(operand1.toString()) // Просто добавляем как строку
+            if (result != null) {
+                currentInput.clear()
+                currentInput.append(result.toString()) // Просто добавляем как строку
+
+                // Используем форматирование для строки истории
+                val historyEntry = if (currentOperator == "/") {
+                    // Отдельно обрабатываем деление, чтобы избежать дробных нулей в выводе
+                    String.format("%s %s %.1f = %.1f", operand1, currentOperator, operand2, result)
+                } else {
+                    String.format("%s %s %s = %s", operand1, currentOperator, operand2, result)
+                }
+
+                addToHistory(historyEntry)
+            }
 
             currentOperator = ""
             currentOperand = null
             tvResult.text = currentInput.toString()
         }
     }
+
 
 
 

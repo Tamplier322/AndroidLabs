@@ -12,11 +12,15 @@
 
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#E64A19"
+        android:layout_width="650dp"
+        android:layout_gravity="center"
+        android:layout_height="60dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="3dp"
         android:ellipsize="end"
-        android:gravity="end"
+        android:gravity="right"
+        android:paddingEnd="12dp"
+        android:paddingTop="6dp"
         android:singleLine="true"
         android:text="0"
         android:textSize="36dp"
@@ -31,20 +35,21 @@
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="650dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         app:orientation="vertical">
+
         <Button
             android:id="@+id/button_history"
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="50dp"
             android:text="History"
             android:textSize="23dp"
-            android:backgroundTint="#290A0A"
-            >
-
+            android:backgroundTint="#290A0A" >
         </Button>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,42 +60,42 @@
             <Button
                 android:id="@+id/button_percent"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="%"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_root"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="√"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_change_sign"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="+/-"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_Pi"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="Pi"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,42 +107,42 @@
             <Button
                 android:id="@+id/button_full_clean"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#E64A19"
                 android:text="C"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_erase"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#E64A19"
                 android:text="⌫"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_divide"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="/"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_myltiply"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="*"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -149,36 +154,36 @@
             <Button
                 android:id="@+id/button9"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="9" />
             <Button
                 android:id="@+id/button8"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="8" />
             <Button
                 android:id="@+id/button7"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="7" />
             <Button
                 android:id="@+id/button_minus"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#882913"
                 android:layout_gravity="fill_horizontal"
                 android:text="-" />
@@ -192,36 +197,37 @@
             <Button
                 android:id="@+id/button6"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="6" />
             <Button
                 android:id="@+id/button5"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="5" />
+
             <Button
                 android:id="@+id/button4"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
-                android:layout_weight="1"
-                android:textSize="30dp"
-                android:backgroundTint="#E64A19"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
-                android:text="4" />
+                android:layout_weight="1"
+                android:backgroundTint="#E64A19"
+                android:text="4"
+                android:textSize="20dp" />
             <Button
                 android:id="@+id/button_plus"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#882913"
                 android:layout_gravity="fill_horizontal"
                 android:text="+" />
@@ -235,27 +241,27 @@
             <Button
                 android:id="@+id/button3"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="3" />
             <Button
                 android:id="@+id/button2"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="2" />
             <Button
                 android:id="@+id/button1"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="1" />
@@ -263,9 +269,9 @@
                 android:id="@+id/button_point"
 
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#882913"
                 android:layout_gravity="fill_horizontal"
                 android:text="." />
@@ -280,9 +286,9 @@
             <Button
                 android:id="@+id/button0"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:backgroundTint="#E64A19"
                 android:layout_gravity="fill_horizontal"
                 android:text="0" />
@@ -290,12 +296,12 @@
             <Button
                 android:id="@+id/button_equals"
                 android:layout_width="0dp"
-                android:layout_height="95dp"
+                android:layout_height="44dp"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="#882913"
                 android:text="="
-                android:textSize="30dp" />
+                android:textSize="20dp" />
         </LinearLayout>
     </androidx.gridlayout.widget.GridLayout>
 
