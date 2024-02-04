@@ -17,10 +17,8 @@ class HistoryActivity : AppCompatActivity() {
         val historyList = intent.getStringArrayListExtra("historyList")
 
         if (historyList != null && historyList.isNotEmpty()) {
-            // Используем индексацию для каждой строки в истории
             val indexedHistory = historyList.mapIndexed { index, line -> "${index + 1}) $line" }
 
-            // Объединяем строки с использованием перевода строки
             historyTextView.text = indexedHistory.joinToString("\n")
         } else {
             historyTextView.text = "No history available"
