@@ -14,27 +14,17 @@ class HistoryActivity : AppCompatActivity() {
 
         historyTextView = findViewById(R.id.historyTextView)
 
-        // Получаем историю операций из Intent
-        val history = getHistoryFromIntent()
-        // Отображаем историю в TextView
-        historyTextView.text = history
-    }
+        val historyList = intent.getStringArrayListExtra("historyList")
 
-    private fun getHistoryFromIntent(): String {
-        // Получаем строку истории из Intent, если она передана
-        val history = intent.getStringExtra("history")
-        return history ?: "No history available"
-    }
+        if (historyList != null && historyList.isNotEmpty()) {
+            // Используем индексацию для каждой строки в истории
+            val indexedHistory = historyList.mapIndexed { index, line -> "${index + 1}) $line" }
 
-    // Дополнительный метод для обновления истории при каждом открытии HistoryActivity
-    private fun updateHistory() {
-        val updatedHistory = getHistoryFromIntent()
-        historyTextView.text = updatedHistory
-    }
-
-    // Добавляем обновление истории при каждом запуске Activity
-    override fun onResume() {
-        super.onResume()
-        updateHistory()
+            // Объединяем строки с использованием перевода строки
+            historyTextView.text = indexedHistory.joinToString("\n")
+        } else {
+            historyTextView.text = "No history available"
+        }
     }
 }
+
