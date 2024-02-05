@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import net.objecthunter.exp4j.ExpressionBuilder
 import android.util.TypedValue
 import android.widget.ScrollView
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tvResult: TextView
@@ -103,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             currentNumberLength = 0
         }
 
-        if (inputString == "0" && buttonText[0].isDigit()) {
+        if (inputString == "0" && buttonText[0].isDigit() || inputString == "0." && buttonText[0] == '.') {
             inputString = buttonText
         } else if (inputString.endsWith("0") && buttonText[0].isDigit() && lastInput.isEmpty()) {
             inputString = buttonText
@@ -115,6 +117,7 @@ class MainActivity : AppCompatActivity() {
             updateResult()
         }
     }
+
 
 
     private fun isAddingDigitsAllowed(button: Button): Boolean {
@@ -159,33 +162,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handlePointButton(): String {
-        val parts = inputString.split("[+\\-*/]".toRegex())
-        if (parts.isNotEmpty() && (!parts.last().contains('.') || parts.last().endsWith("(") || parts.last().isEmpty())) {
-            if (inputString.isNotEmpty() && "+-*/".contains(inputString.last())) {
-                return ""
-            }
-            if (inputString.isNotEmpty() && !"+-*/".contains(inputString.last())) {
+        if (inputString.isEmpty()) {
+            return "0."
+        }
+
+        val lastChar = inputString.last()
+
+        if (lastChar.isDigit() || lastChar == ')' || lastChar in "logsincostan") {
+            val lastNumber = inputString.split("[+\\-*/]".toRegex()).last()
+            if (!lastNumber.contains('.')) {
                 return "."
             }
+        } else if (lastChar == '(' || lastChar in "+-*/") {
+            return "0."
         }
-        return ""
+
+        return "."
     }
 
-    private fun canAddOperatorOrPointAfterOpeningBracket(operator: Char): Boolean {
-        return inputString.isNotEmpty() && inputString.last() == '(' && (operator == '.' || "+*/".contains(operator))
-    }
 
     private fun handleOperatorButton(button: Button): String {
-        if (canAddOperatorOrPointAfterOpeningBracket(button.text[0])) {
-            return ""
-        }
-
         if (inputString.isNotEmpty() && "+-*/".contains(inputString.last())) {
-            return ""
+            inputString = inputString.dropLast(1)
         }
-
         return button.text.toString()
     }
+
 
     private fun handleLeftBracketButton(): String {
         if (inputString.isNotEmpty() && inputString.last().isDigit()) {
@@ -198,7 +200,7 @@ class MainActivity : AppCompatActivity() {
         if (inputString.isNotEmpty() && inputString.last().isDigit()) {
             return ")"
         }
-        return ""
+        return ")"
     }
 
     fun openHistoryActivity(view: View) {
@@ -281,25 +283,28 @@ class MainActivity : AppCompatActivity() {
         inputString += autoCloseBrackets()
 
         try {
-            val result = ExpressionBuilder(inputString).build().evaluate()
-            val epsilon = 1e-10
-
+            val expression = ExpressionBuilder(inputString).build()
+            val result = expression.evaluate()
             val historyLine = when {
-                Math.abs(result) > 1e16 -> "∞"
-                Math.abs(result - result.toInt()) < epsilon -> String.format("%.0f", result)
+                result.isInfinite() -> "∞"
                 result.isNaN() -> "Некорректный ввод"
-                else -> result.toString()
+                else -> {
+                    val roundedResult = BigDecimal(result.toString()).setScale(10, RoundingMode.HALF_EVEN)
+                    roundedResult.stripTrailingZeros().toPlainString()
+                }
             }
             historyList.add("$inputString = $historyLine")
-
-            // Обновляем строку результата
             inputString = historyLine
-            appendResultText("\n") // Добавляем новую строку перед выводом следующего результата
+            appendResultText("\n")
         } catch (e: ArithmeticException) {
-            inputString = "Ошибка"
+            inputString = "Ошибка: Деление на ноль"
+        } catch (e: IllegalArgumentException) {
+            inputString = "Ошибка: Некорректное выражение"
         } catch (e: Exception) {
-            inputString = "Ошибка"
+            inputString = "Ошибка: ${e.message}"
         }
         updateResult()
     }
+
+
 }
