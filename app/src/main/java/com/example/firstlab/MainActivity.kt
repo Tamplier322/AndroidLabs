@@ -21,12 +21,20 @@ class MainActivity : AppCompatActivity() {
     val MAX_CHARACTERS = 15
     private var isMaxDigitsExceeded = false
     private var currentNumberLength = 0
-
+    private val INPUT_STRING_KEY = "inputString"
+    private val HISTORY_LIST_KEY = "historyList"
+    private val ANGLE_MODE_KEY = "angleMode"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         tvResult = findViewById(R.id.tvResult)
+
+        savedInstanceState?.let {
+            inputString = it.getString(INPUT_STRING_KEY, "")
+            historyList.addAll(it.getStringArrayList(HISTORY_LIST_KEY) ?: emptyList())
+            updateResult()
+        }
 
         val buttons = arrayOf(
             R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
@@ -76,6 +84,29 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button_equals).setOnClickListener {
             calculateResult()
         }
+
+        isDegreeMode = savedInstanceState?.getBoolean(ANGLE_MODE_KEY, true) ?: true
+        updateAngleModeButton()
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(INPUT_STRING_KEY, inputString)
+        outState.putBoolean(ANGLE_MODE_KEY, isDegreeMode)
+        outState.putStringArrayList(HISTORY_LIST_KEY, ArrayList(historyList.distinct()))
+        super.onSaveInstanceState(outState)
+    }
+    private fun updateAngleModeButton() {
+        val buttonAngleMode = findViewById<Button>(R.id.button_angle_mode)
+        buttonAngleMode.text = if (isDegreeMode) "Deg" else "Rad"
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        inputString = savedInstanceState.getString(INPUT_STRING_KEY, "")
+        historyList.clear()
+        historyList.addAll(savedInstanceState.getStringArrayList(HISTORY_LIST_KEY) ?: emptyList())
+        updateResult()
     }
 
     private fun onButtonClick(button: Button) {
@@ -96,6 +127,14 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        if (button.id == R.id.button_point) {
+            val lastNumber = inputString.split("[+\\-*/()]".toRegex()).lastOrNull()
+            if (lastNumber != null && lastNumber.contains('.')) {
+                return
+            }
+            inputString += ""
+        }
+
         if (buttonText[0].isDigit() || buttonText == ".") {
             currentNumberLength++
             if (currentNumberLength > MAX_CHARACTERS) {
@@ -103,6 +142,10 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             currentNumberLength = 0
+        }
+
+        if (inputString.startsWith("Ошибка:") || inputString.startsWith("Некорректный ввод")) {
+            inputString = ""
         }
 
         if (inputString == "0" && buttonText[0].isDigit() || inputString == "0." && buttonText[0] == '.') {
@@ -117,8 +160,6 @@ class MainActivity : AppCompatActivity() {
             updateResult()
         }
     }
-
-
 
     private fun isAddingDigitsAllowed(button: Button): Boolean {
         val currentInput = when (button.id) {
@@ -140,7 +181,6 @@ class MainActivity : AppCompatActivity() {
         val parts = inputString.split("[+\\-*/()]".toRegex())
         val isReached = parts.any { it.length > MAX_CHARACTERS }
 
-        // Обновим переменную в зависимости от результата
         isMaxDigitsExceeded = isReached
 
         return isReached
@@ -203,12 +243,6 @@ class MainActivity : AppCompatActivity() {
         return ")"
     }
 
-    fun openHistoryActivity(view: View) {
-        val historyIntent = Intent(this, HistoryActivity::class.java)
-        historyIntent.putStringArrayListExtra("historyList", ArrayList(historyList))
-        startActivity(historyIntent)
-    }
-
     private fun onFunctionButtonClick(button: Button) {
         val currentFunction = when (button.id) {
             R.id.button_log -> "log10"
@@ -242,6 +276,12 @@ class MainActivity : AppCompatActivity() {
 
         inputString += functionText
         updateResult()
+    }
+
+    fun openHistoryActivity(view: View) {
+        val historyIntent = Intent(this, HistoryActivity::class.java)
+        historyIntent.putStringArrayListExtra("historyList", ArrayList(historyList))
+        startActivity(historyIntent)
     }
 
     private fun updateResult() {
@@ -305,6 +345,4 @@ class MainActivity : AppCompatActivity() {
         }
         updateResult()
     }
-
-
 }
