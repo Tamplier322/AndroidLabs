@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_corner_background"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_centerHorizontal="true"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="100dp"
+    android:padding="16dp">
+
+    <ImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_close"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close_button_description"
+        android:layout_below="@id/tvUIDescription" />
+
+    <TextView
+        android:id="@+id/tvNormalDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/normal_description"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvGameDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/game_description"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_below="@id/tvNormalDescription"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvUIDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ui_description"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_below="@id/tvGameDescription"
+        android:layout_marginTop="16dp"/>
+
+
+</RelativeLayout>

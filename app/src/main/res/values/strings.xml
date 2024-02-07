@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Calculator</string>
+    <string name="info_button_description">Информация</string>
+    <string name="close_button_description">Закрыть</string>
+    <string name="normal_description"><b>NORMAL</b> (Нормальный): Обычная частота обновления сенсора. Подходит для стандартных приложений.</string>
+    <string name="game_description"><b>GAME</b> (Игровой): Повышенная частота обновления для игровых приложений.</string>
+    <string name="ui_description"><b>UI</b> (Пользовательский интерфейс): Максимально высокая частота обновления для реагирования на пользовательские взаимодействия.</string>
 </resources>

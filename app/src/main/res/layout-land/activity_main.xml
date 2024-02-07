@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#290A0A"
                 android:paddingTop="0dp"
-                android:text="History"
+                android:text="История"
                 android:textSize="23dp"></Button>
 
             <Button
@@ -67,6 +67,17 @@
                 android:paddingTop="0dp"
                 android:text="Deg"
                 android:textSize="23dp"></Button>
+
+            <Button
+                android:id="@+id/button_level"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:layout_weight="1"
+                android:backgroundTint="#290A0A"
+                android:paddingTop="0dp"
+                android:text="Уровень"
+                android:textSize="23dp"
+                />
         </LinearLayout>
 
         <LinearLayout

@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         tvResult = findViewById(R.id.tvResult)
 
         savedInstanceState?.let {
@@ -85,8 +86,19 @@ class MainActivity : AppCompatActivity() {
             calculateResult()
         }
 
+
+        val buttonLevel = findViewById<Button>(R.id.button_level)
+        buttonLevel.setOnClickListener {
+            openLevelActivity()
+        }
+
+
         isDegreeMode = savedInstanceState?.getBoolean(ANGLE_MODE_KEY, true) ?: true
         updateAngleModeButton()
+    }
+    private fun openLevelActivity() {
+        val intent = Intent(this, LevelActivity::class.java)
+        startActivity(intent)
     }
 
 
