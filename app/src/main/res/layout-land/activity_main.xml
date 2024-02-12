@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFF"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Activitis.MainActivity">
 
 
     <ScrollView
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="700dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="#E64A19"
@@ -36,7 +36,7 @@
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
         android:layout_gravity="center"
-        android:layout_width="700dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         app:orientation="vertical">

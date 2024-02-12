@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFF"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Activitis.MainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"

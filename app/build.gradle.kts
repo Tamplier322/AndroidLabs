@@ -37,7 +37,7 @@ android {
 
 dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
-    implementation ("org.mariuszgromada.math:MathParser.org-mXparser:4.4.0")
+    implementation("org.mariuszgromada.math:MathParser.org-mXparser:4.4.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("net.objecthunter:exp4j:0.4.8")
     implementation("androidx.appcompat:appcompat:1.6.1")

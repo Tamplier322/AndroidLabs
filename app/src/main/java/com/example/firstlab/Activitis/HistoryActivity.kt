@@ -1,10 +1,11 @@
-package com.example.firstlab
+package com.example.firstlab.Activitis
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.firstlab.R
 
 class HistoryActivity : AppCompatActivity() {
 

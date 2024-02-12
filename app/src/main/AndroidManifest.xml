@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstLab"
         tools:targetApi="31">
-        <activity android:name=".SplashScreenActivity"
+        <activity android:name=".Activitis.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activitis.MainActivity">
         </activity>
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".LevelActivity" />
+        <activity android:name=".Activitis.HistoryActivity" />
+        <activity android:name=".Activitis.LevelActivity" />
     </application>
 
 </manifest>
