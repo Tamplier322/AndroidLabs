@@ -54,4 +54,15 @@
         android:layout_marginTop="16dp"
         android:text="Change Accuracy" />
 
+    <Button
+        android:id="@+id/btnAddToCalc"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnChangeAccuracy"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textSize="18sp"
+        android:text="Add to calculator" />
+
+
 </RelativeLayout>

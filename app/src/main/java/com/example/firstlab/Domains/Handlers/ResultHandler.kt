@@ -63,17 +63,12 @@ class ResultHandler(private val activity: MainActivity, private val utils: Utils
                 result.isNaN() -> "Некорректный ввод"
                 else -> {
                     val formattedResult = when {
-                        result.absoluteValue >= 1e16 || result.absoluteValue < 1e-16 -> {
-                            String.format("%.4e", result)
-                        }
+                        // Проверяем, является ли результат числом с экспоненциальной формой
+                        result.toString().contains('E') || result.toString().contains('e') -> result.toString()
                         else -> {
+                            // Форматируем результат как обычное число
                             val roundedResult = BigDecimal(result.toString()).setScale(10, RoundingMode.HALF_EVEN)
-                            val plainResult = roundedResult.stripTrailingZeros().toPlainString()
-                            if (plainResult == "0" || plainResult == "-0") {
-                                "0"
-                            } else {
-                                plainResult
-                            }
+                            roundedResult.stripTrailingZeros().toPlainString()
                         }
                     }
                     formattedResult

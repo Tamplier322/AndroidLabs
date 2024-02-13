@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.firstlab.Domains.SensorManagers.LevelSensor
 import com.example.firstlab.Domains.Utils.LevelPopup
 import com.example.firstlab.R
+import com.example.firstlab.Domains.Utils.DialogHelper
 
 class LevelActivity : AppCompatActivity() {
 
@@ -17,6 +18,8 @@ class LevelActivity : AppCompatActivity() {
     private lateinit var tvAngle: TextView
     private lateinit var tvAccuracyMode: TextView
     private lateinit var btnClose: ImageButton
+    private var savedAngle: Float = 0f
+    private val dialogHelper: DialogHelper by lazy { DialogHelper(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,12 @@ class LevelActivity : AppCompatActivity() {
         val btnInfo: ImageButton = findViewById(R.id.btnInfo)
         btnInfo.setOnClickListener {
             levelPopup.showInfoPopup()
+        }
+
+        val btnAddToCalc: Button = findViewById(R.id.btnAddToCalc)
+        btnAddToCalc.setOnClickListener {
+            savedAngle = sensorManager.currentAngle
+            dialogHelper.showFunctionSelectionDialog(savedAngle)
         }
 
         btnClose.setOnClickListener {

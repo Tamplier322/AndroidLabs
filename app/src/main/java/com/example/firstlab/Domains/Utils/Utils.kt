@@ -11,6 +11,7 @@ class Utils(private val activity: MainActivity) {
         buttonAngleMode.text = if (isDegreeMode) "Deg" else "Rad"
     }
 
+
     fun autoCloseBrackets(inputString: String): String {
         var openBracketsCount = 0
         var closeBracketsCount = 0

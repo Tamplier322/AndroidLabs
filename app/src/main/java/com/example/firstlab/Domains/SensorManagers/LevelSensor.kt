@@ -1,3 +1,4 @@
+// LevelSensor.kt
 package com.example.firstlab.Domains.SensorManagers
 
 import android.animation.ValueAnimator

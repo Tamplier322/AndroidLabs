@@ -10,7 +10,7 @@ class FunctionHandler {
 
         val lastChar = inputString.last()
 
-        if (lastChar.isDigit() || lastChar == ')' || lastChar in "logsincostan") {
+        if (lastChar.isDigit() || lastChar == ')' || lastChar == 'e') {
             val lastNumber = inputString.split("[+\\-*/]".toRegex()).last()
             if (!lastNumber.contains('.')) {
                 return "."
@@ -33,7 +33,12 @@ class FunctionHandler {
     fun handleRightBracketButton(inputString: String): String {
         if (inputString.isNotEmpty() && inputString.last().isDigit()) {
             return ")"
+        } else if (inputString.isNotEmpty() && inputString.last() == ')') {
+            return "^"
         }
         return ")"
     }
+
+
+
 }

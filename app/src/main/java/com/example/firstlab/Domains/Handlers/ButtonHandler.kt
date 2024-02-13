@@ -25,6 +25,13 @@ class ButtonClickListener(private val activity: MainActivity, private val result
             if (buttonText == "^" && !canAddPowerSymbol()) {
                 return
             }
+            else if (buttonText == "^" && lastInput[0] == ')') {
+                inputString += buttonText
+                lastInput = buttonText
+                resultHandler.updateResult()
+                return
+            }
+
 
             if (button.id == R.id.button_point) {
                 val lastNumber = inputString.split("[+\\-*/()]".toRegex()).lastOrNull()

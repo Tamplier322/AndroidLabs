@@ -46,6 +46,18 @@ class MainActivity : AppCompatActivity() {
         instanceStateUtils = InstanceStateUtils(this)
         val buttonClickListener = ButtonClickListener(this, resultHandler)
         val buttonEqual = findViewById<Button>(R.id.button_equals)
+        val function = intent.getStringExtra("function")
+        val angle = intent.getFloatExtra("angle", 0f)
+
+        if (function != null) {
+            val functionText = when (function) {
+                "sin" -> "sin(π/180.0*${angle})"
+                "cos" -> "cos(π/180.0*${angle})"
+                "tan" -> "tan(π/180.0*${angle})"
+                else -> ""
+            }
+            inputString += functionText
+        }
 
         val buttons = arrayOf(
             R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
