@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("org.mariuszgromada.math:MathParser.org-mXparser:4.4.0")
     implementation("androidx.core:core-ktx:1.12.0")

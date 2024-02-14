@@ -6,6 +6,9 @@ import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.firstlab.R
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -25,5 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, SPLASH_TIME_OUT)
+
+
     }
 }

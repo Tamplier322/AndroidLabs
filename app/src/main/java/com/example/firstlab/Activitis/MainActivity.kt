@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.example.firstlab.Domains.ActivityIntents.ActivityUtils
 import com.example.firstlab.Domains.ActivityIntents.InstanceStateUtils
 import com.example.firstlab.Domains.Handlers.ButtonClickListener
@@ -123,7 +124,6 @@ class MainActivity : AppCompatActivity() {
         savedInstanceState?.let {
             instanceStateUtils.onRestoreInstanceState(savedInstanceState)
         }
-
 
         isDegreeMode = savedInstanceState?.getBoolean(ANGLE_MODE_KEY, true) ?: true
         utils.updateAngleModeButton(isDegreeMode)

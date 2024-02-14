@@ -22,10 +22,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitis.MainActivity">
+        <activity
+            android:name=".Activitis.MainActivity"
+            android:label="MainActivity"
+            android:exported="true">
+            <nav-graph android:value="@navigation/nav_graph" />
         </activity>
-        <activity android:name=".Activitis.HistoryActivity" />
-        <activity android:name=".Activitis.LevelActivity" />
+
+        <activity
+            android:name=".Activitis.HistoryActivity"
+            android:label="HistoryActivity"
+            android:exported="true">
+            <nav-graph android:value="@navigation/nav_graph" />
+        </activity>
+
+        <activity
+            android:name=".Activitis.LevelActivity"
+            android:label="LevelActivity"
+            android:exported="true">
+            <nav-graph android:value="@navigation/nav_graph" />
+        </activity>
     </application>
 
 </manifest>

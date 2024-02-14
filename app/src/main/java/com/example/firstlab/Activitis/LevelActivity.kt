@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.example.firstlab.Domains.SensorManagers.LevelSensor
 import com.example.firstlab.Domains.Utils.LevelPopup
 import com.example.firstlab.R
@@ -47,6 +48,7 @@ class LevelActivity : AppCompatActivity() {
             savedAngle = sensorManager.currentAngle
             dialogHelper.showFunctionSelectionDialog(savedAngle)
         }
+
 
         btnClose.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
