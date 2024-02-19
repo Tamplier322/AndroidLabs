@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.ScrollView
 import com.example.firstlab.Activitis.MainActivity
+import com.example.firstlab.Domains.PushNotificationManager.PushNotificationManager
 import java.math.BigDecimal
 import java.math.RoundingMode
 import com.example.firstlab.R
@@ -13,6 +14,7 @@ import kotlin.math.absoluteValue
 
 class ResultHandler(private val activity: MainActivity, private val utils: Utils) {
 
+    private val pushNotificationManager = PushNotificationManager(activity)
     fun updateResult() {
         activity.tvResult.text = ""
 
@@ -63,10 +65,8 @@ class ResultHandler(private val activity: MainActivity, private val utils: Utils
                 result.isNaN() -> "Некорректный ввод"
                 else -> {
                     val formattedResult = when {
-                        // Проверяем, является ли результат числом с экспоненциальной формой
                         result.toString().contains('E') || result.toString().contains('e') -> result.toString()
                         else -> {
-                            // Форматируем результат как обычное число
                             val roundedResult = BigDecimal(result.toString()).setScale(10, RoundingMode.HALF_EVEN)
                             roundedResult.stripTrailingZeros().toPlainString()
                         }
@@ -79,12 +79,19 @@ class ResultHandler(private val activity: MainActivity, private val utils: Utils
             activity.inputString = historyLine
             appendResultText("\n")
         } catch (e: ArithmeticException) {
-            activity.inputString = "Ошибка: Деление на ноль"
+            val errorMessage = "Ошибка: Деление на ноль"
+            activity.inputString = errorMessage
+            pushNotificationManager.sendErrorNotification(errorMessage)
         } catch (e: IllegalArgumentException) {
-            activity.inputString = "Ошибка: Некорректное выражение"
+            val errorMessage = "Ошибка: Некорректное выражение"
+            activity.inputString = errorMessage
+            pushNotificationManager.sendErrorNotification(errorMessage)
         } catch (e: Exception) {
-            activity.inputString = "Ошибка: ${e.message}"
+            val errorMessage = "Ошибка: ${e.message}"
+            activity.inputString = errorMessage
+            pushNotificationManager.sendErrorNotification(errorMessage)
         }
         updateResult()
+
     }
 }

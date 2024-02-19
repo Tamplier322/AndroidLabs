@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.example.firstlab.Domains.ActivityIntents.InstanceStateUtils
 import com.example.firstlab.Domains.SensorManagers.LevelSensor
 import com.example.firstlab.Domains.Utils.LevelPopup
 import com.example.firstlab.R
@@ -49,15 +50,25 @@ class LevelActivity : AppCompatActivity() {
             dialogHelper.showFunctionSelectionDialog(savedAngle)
         }
 
+        savedInstanceState?.let {
+            val instanceStateUtils = InstanceStateUtils(MainActivity())
+            instanceStateUtils.onRestoreInstanceState(it)
+        }
 
         btnClose.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, MainActivity::class.java)
+            //startActivity(intent)
             finish()
         }
 
         sensorManager.tvAngle = tvAngle
         sensorManager.tvAccuracyMode = tvAccuracyMode
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val instanceStateUtils = InstanceStateUtils(MainActivity())
+        instanceStateUtils.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {

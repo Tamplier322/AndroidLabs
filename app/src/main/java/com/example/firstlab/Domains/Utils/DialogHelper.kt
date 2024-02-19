@@ -9,6 +9,7 @@ import com.example.firstlab.Activitis.MainActivity
 import com.example.firstlab.R
 import java.util.Locale
 import android.view.LayoutInflater
+import com.example.firstlab.Domains.PushNotificationManager.PushNotificationManager
 
 class DialogHelper(private val context: Context) {
 
@@ -51,11 +52,16 @@ class DialogHelper(private val context: Context) {
         dialog.show()
     }
 
+    // В методе DialogHelper.navigateToCalculator добавьте отправку уведомления
     private fun navigateToCalculator(selectedFunction: String, savedAngle: Float) {
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("function", selectedFunction)
             putExtra("angle", savedAngle)
         }
         context.startActivity(intent)
+
+        val notificationManager = PushNotificationManager(context)
+        val notificationMessage = "Выбранная функция: $selectedFunction, Угол: $savedAngle°"
+        notificationManager.sendLevelNotification(notificationMessage)
     }
 }

@@ -9,6 +9,7 @@ import com.example.firstlab.Domains.ActivityIntents.ActivityUtils
 import com.example.firstlab.Domains.ActivityIntents.InstanceStateUtils
 import com.example.firstlab.Domains.Handlers.ButtonClickListener
 import com.example.firstlab.Domains.Handlers.ResultHandler
+import com.example.firstlab.Domains.PushNotificationManager.PushNotificationManager
 import com.example.firstlab.Domains.Utils.Utils
 import com.example.firstlab.R
 
@@ -71,6 +72,12 @@ class MainActivity : AppCompatActivity() {
         val buttonLevel = findViewById<Button>(R.id.button_level)
         buttonLevel.setOnClickListener {
             activityUtils.openLevelActivity()
+        }
+
+        if (function != null && angle != null) {
+            val notificationManager = PushNotificationManager(this)
+            val notificationMessage = "Выбранная функция: $function, Угол: $angle°"
+            notificationManager.sendLevelNotification(notificationMessage)
         }
 
         val buttonHistory = findViewById<Button>(R.id.button_history)
