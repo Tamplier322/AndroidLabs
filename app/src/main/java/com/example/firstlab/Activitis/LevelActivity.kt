@@ -39,6 +39,7 @@ class LevelActivity : AppCompatActivity() {
             sensorManager.toggleSensorAccuracy()
         }
 
+
         val btnInfo: ImageButton = findViewById(R.id.btnInfo)
         btnInfo.setOnClickListener {
             levelPopup.showInfoPopup()

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676094605131",
+    "project_id": "android-labs-cec47",
+    "storage_bucket": "android-labs-cec47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676094605131:android:1081185152b912d7235ace",
+        "android_client_info": {
+          "package_name": "com.example.firstlab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOMMRS3i7BWb2xKgkmisSOZl73yzaHaJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,13 +17,21 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import android.os.Build
+import android.provider.Settings
+import android.content.Intent
+import android.net.Uri
+
+const val THEME_PREFERENCES = "ThemePrefs"
+const val SELECTED_THEME = "SelectedTheme"
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var resultHandler: ResultHandler
     lateinit var activityUtils: ActivityUtils
     lateinit var instanceStateUtils: InstanceStateUtils
+    private val db = Firebase.firestore
 
     var inputString = ""
     var isDegreeMode = true
@@ -48,22 +57,33 @@ class MainActivity : AppCompatActivity() {
     val textSizeOriginal = 36f
     val textSizeSmall = 28f
     val historyList = mutableListOf<String>()
+    private val historyCollection = db.collection("history")
 
-
-    private val THEME_PREFERENCES = "ThemePrefs"
-    private val SELECTED_THEME = "SelectedTheme"
-
-    private val THEME_DEFAULT = 1
-    private val THEME_ONE = 1
-    private val THEME_TWO = 2
-    private val THEME_THREE = 3
-    private val THEME_FOUR = 4
-    private var currentTheme: Int = THEME_DEFAULT
+    val THEME_DEFAULT = 1
+    val THEME_ONE = 1
+    val THEME_TWO = 2
+    val THEME_THREE = 3
+    val THEME_FOUR = 4
+    var currentTheme: Int = THEME_DEFAULT
+    var isThemeLoaded = false
+    val ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 5469
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${this.packageName}"))
+            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE)
+        }
+
+        if (!isThemeLoaded) {
+            getCurrentThemeFromFirestore()
+            isThemeLoaded = true
+        }
+
+        loadHistoryFromFirestore()
+        loadLastResultFromFirestore()
         loadTheme()
         applyTheme()
 
@@ -76,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         val buttonEqual = findViewById<Button>(R.id.button_equals)
         val function = intent.getStringExtra("function")
         val angle = intent.getFloatExtra("angle", 0f)
+        val themesRef = db.collection("theme")
 
         if (function != null) {
             val functionText = when (function) {
@@ -99,6 +120,8 @@ class MainActivity : AppCompatActivity() {
         buttonTheme.setOnClickListener {
             showThemeSelectionDialog()
         }
+
+
 
         val buttonLevel = findViewById<Button>(R.id.button_level)
         buttonLevel.setOnClickListener {
@@ -170,8 +193,68 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         instanceStateUtils.onSaveInstanceState(outState)
+        saveHistoryAndLastResultToFirestore()
         super.onSaveInstanceState(outState)
     }
+
+    private fun saveHistoryAndLastResultToFirestore() {
+        val historyData = hashMapOf("historyList" to historyList)
+        historyCollection.document("historyData").set(historyData)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Ошибка при сохранении истории в Firestore", Toast.LENGTH_SHORT).show()
+            }
+
+        val lastResultData = hashMapOf("result" to tvResult.text.toString())
+        db.collection("lastResult").document("result").set(lastResultData)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Ошибка при сохранении последнего результата в Firestore", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadHistoryFromFirestore() {
+        historyCollection.document("historyData").get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val history = document.get("historyList") as? List<String>
+                    if (history != null) {
+                        historyList.clear()
+                        historyList.addAll(history)
+                    }
+
+                    val iterator = historyList.iterator()
+                    while (iterator.hasNext()) {
+                        val item = iterator.next()
+                        if (history != null) {
+                            if (!history.contains(item)) {
+                                iterator.remove()
+                            }
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Ошибка при загрузке истории из Firestore", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadLastResultFromFirestore() {
+        val resultRef = db.collection("lastResult").document("result")
+        resultRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val lastResult = document.getString("result")
+                    tvResult.text = lastResult
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Ошибка при загрузке последнего результата из Firestore", Toast.LENGTH_SHORT).show()
+            }
+    }
+
 
     private fun showThemeSelectionDialog() {
         val dialogView = layoutInflater.inflate(R.layout.theme_selection_dialog, null)
@@ -244,9 +327,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeTheme(theme: Int) {
-        currentTheme = theme
-        saveTheme()
-        recreate()
+        if (theme != currentTheme) {
+            currentTheme = theme
+            saveTheme()
+            saveCurrentThemeToFirestore(theme)
+            recreate()
+        }
     }
 
     private fun saveTheme() {
@@ -326,6 +412,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveCurrentThemeToFirestore(theme: Int) {
+        val themesRef = db.collection("theme")
+        val data = hashMapOf("current_theme" to theme)
+        themesRef.document("7rGDPSlMyggDXGsYwpnu").set(data)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Ошибка при сохранении темы в Firestore", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun getCurrentThemeFromFirestore() {
+        val themesRef = db.collection("theme")
+        themesRef.document("7rGDPSlMyggDXGsYwpnu").get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val theme = document.getLong("current_theme")
+                    if (theme != null) {
+                        changeTheme(theme.toInt())
+                        isThemeLoaded = true
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Ошибка при загрузке темы из Firestore", Toast.LENGTH_SHORT).show()
+            }
+    }
 
     private fun setButtonColors(
         primaryColor: Int,

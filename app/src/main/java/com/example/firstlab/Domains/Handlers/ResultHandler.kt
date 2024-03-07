@@ -15,6 +15,8 @@ import kotlin.math.absoluteValue
 class ResultHandler(private val activity: MainActivity, private val utils: Utils) {
 
     private val pushNotificationManager = PushNotificationManager(activity)
+
+
     fun updateResult() {
         activity.tvResult.text = ""
 

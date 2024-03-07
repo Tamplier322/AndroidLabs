@@ -16,6 +16,7 @@ class HistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
+
         btnClose = findViewById(R.id.btnClose)
 
         historyTextView = findViewById(R.id.historyTextView)
