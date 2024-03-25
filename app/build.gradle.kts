@@ -34,10 +34,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("androidx.biometric:biometric:1.1.0")
     implementation("com.google.firebase:firebase-messaging:23.4.1")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database:20.3.1")

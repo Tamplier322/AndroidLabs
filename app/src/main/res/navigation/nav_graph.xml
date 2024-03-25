@@ -7,7 +7,16 @@
         android:name="com.example.firstlab.Activitis.SplashScreenActivity"
         android:label="activity_splash_screen">
         <action
-            android:id="@+id/action_splashScreen_to_passKeySetupActivity"
+            android:id="@+id/action_splashScreen_to_authActivity"
+            app:destination="@id/authActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/authActivity"
+        android:name="com.example.firstlab.Activitis.AuthActivity"
+        android:label="activity_login">
+        <action
+            android:id="@+id/action_authActivity_to_mainActivity"
             app:destination="@id/mainActivity" />
     </activity>
 
