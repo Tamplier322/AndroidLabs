@@ -15,10 +15,11 @@ import kotlin.math.absoluteValue
 class ResultHandler(private val activity: MainActivity, private val utils: Utils) {
 
     private val pushNotificationManager = PushNotificationManager(activity)
+    var lastResultFromFirestore: String? = null
 
 
     fun updateResult() {
-        activity.tvResult.text = ""
+        activity.tvResult.text = lastResultFromFirestore ?: ""
 
         val inputString = activity.inputString
         val maxCharacters = activity.maxCharacters

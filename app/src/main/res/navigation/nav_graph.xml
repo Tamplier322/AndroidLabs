@@ -7,7 +7,7 @@
         android:name="com.example.firstlab.Activitis.SplashScreenActivity"
         android:label="activity_splash_screen">
         <action
-            android:id="@+id/action_splashScreen_to_mainActivity"
+            android:id="@+id/action_splashScreen_to_passKeySetupActivity"
             app:destination="@id/mainActivity" />
     </activity>
 

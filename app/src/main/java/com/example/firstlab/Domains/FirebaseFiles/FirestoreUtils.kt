@@ -11,32 +11,30 @@ class FirestoreUtils(private val context: Context) {
     private val historyCollection = db.collection("history")
     private val lastResultCollection = db.collection("lastResult")
 
-    fun saveHistoryAndLastResultToFirestore(historyList: List<String>, lastResult: String) {
+    fun saveHistoryAndLastResultToFirestore(historyList: List<String>, lastResult: Int) {
         saveHistoryToFirestore(historyList)
-        saveLastResultToFirestore(lastResult)
+        //saveLastResultToFirestore(lastResult)
     }
 
     private fun saveHistoryToFirestore(historyList: List<String>) {
         val historyData = hashMapOf("historyList" to historyList)
         historyCollection.document("historyData").set(historyData)
             .addOnSuccessListener {
-                // Обработка успешного сохранения истории
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Ошибка при сохранении истории в Firestore", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun saveLastResultToFirestore(lastResult: String) {
-        val lastResultData = hashMapOf("result" to lastResult)
-        lastResultCollection.document("result").set(lastResultData)
-            .addOnSuccessListener {
-                // Обработка успешного сохранения последнего результата
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Ошибка при сохранении последнего результата в Firestore", Toast.LENGTH_SHORT).show()
-            }
-    }
+//    private fun saveLastResultToFirestore(lastResult: Int) {
+//        val lastResultData = hashMapOf("result" to lastResult)
+//        lastResultCollection.document("result").set(lastResultData)
+//            .addOnSuccessListener {
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(context, "Ошибка при сохранении последнего результата в Firestore", Toast.LENGTH_SHORT).show()
+//            }
+//    }
 
     fun loadHistoryFromFirestore(historyList: MutableList<String>) {
         historyCollection.document("historyData").get()
@@ -64,19 +62,25 @@ class FirestoreUtils(private val context: Context) {
             }
     }
 
-    fun loadLastResultFromFirestore(tvResult: TextView) {
-        val resultRef = db.collection("lastResult").document("result")
-        resultRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    val lastResult = document.getString("result")
-                    tvResult.text = lastResult
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(context, "Ошибка при загрузке последнего результата из Firestore", Toast.LENGTH_SHORT).show()
-            }
-    }
+//    fun loadLastResultFromFirestore(tvResult: TextView) {
+//        val resultRef = db.collection("lastResult").document("result")
+//        resultRef.get()
+//            .addOnSuccessListener { document ->
+//                if (document != null && document.exists()) {
+//                    val lastResult = document.getLong("result")
+//                    if (lastResult != null) {
+//                        tvResult.text = lastResult.toString()
+//                    } else {
+//                        Toast.makeText(context, "Ошибка: последний результат не является числом", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Toast.makeText(context, "Ошибка при загрузке последнего результата из Firestore", Toast.LENGTH_SHORT).show()
+//            }
+//    }
+
+
 
     fun clearHistoryInFirestore(function: (Any?) -> Unit) {
         historyCollection.document("historyData").delete()

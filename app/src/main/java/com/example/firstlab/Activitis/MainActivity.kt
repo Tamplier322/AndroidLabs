@@ -1,7 +1,10 @@
-package com.example.firstlab.Activitis
+    package com.example.firstlab.Activitis
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +18,9 @@ import com.example.firstlab.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.util.Log
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
@@ -89,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         firestoreUtils.loadHistoryFromFirestore(historyList)
-        firestoreUtils.loadLastResultFromFirestore(tvResult)
+        //firestoreUtils.loadLastResultFromFirestore(tvResult)
         currentTheme = loadTheme(this)
         applyTheme(this, currentTheme)
 
@@ -201,11 +207,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         instanceStateUtils.onSaveInstanceState(outState)
-        if (!historyList.isNullOrEmpty()) {
-            firestoreUtils.saveHistoryAndLastResultToFirestore(historyList, tvResult.text.toString())
+        val lastResultString = tvResult.text.toString()
+        val lastResultInt = lastResultString.toIntOrNull()
+        if (lastResultInt != null) {
+            if (!historyList.isNullOrEmpty()) {
+                firestoreUtils.saveHistoryAndLastResultToFirestore(historyList, lastResultInt)
+            }
+        } else {
+            Log.e("YourActivity", "Failed to convert last result to integer")
         }
         super.onSaveInstanceState(outState)
     }
+
 
     private fun changeTheme(theme: Int) {
         if (theme != currentTheme) {
@@ -215,4 +228,5 @@ class MainActivity : AppCompatActivity() {
             recreate()
         }
     }
+
 }

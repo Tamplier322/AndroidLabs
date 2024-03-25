@@ -3,6 +3,7 @@ package com.example.firstlab.Domains.FirebaseFiles
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
+import android.os.Build
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -31,6 +32,7 @@ fun applyTheme(activity: MainActivity, currentTheme: Int) {
                 R.color.textColorPrimary1,
                 R.color.backgroundColor1
             )
+            setStatusBarColor(activity, R.color.colorPrimaryDark1)
             ViewCompat.setBackgroundTintList(activity.findViewById(R.id.gridLayout), ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.backgroundColor1)))
             activity.findViewById<LinearLayout>(R.id.rootLayout).setBackgroundColor(ContextCompat.getColor(activity, R.color.backgroundColor1))
         }
@@ -43,6 +45,7 @@ fun applyTheme(activity: MainActivity, currentTheme: Int) {
                 R.color.textColorPrimary2,
                 R.color.backgroundColor2
             )
+            setStatusBarColor(activity, R.color.colorPrimaryDark2)
             ViewCompat.setBackgroundTintList(activity.findViewById(R.id.gridLayout), ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.backgroundColor2)))
             activity.findViewById<LinearLayout>(R.id.rootLayout).setBackgroundColor(ContextCompat.getColor(activity, R.color.backgroundColor2))
         }
@@ -55,6 +58,7 @@ fun applyTheme(activity: MainActivity, currentTheme: Int) {
                 R.color.textColorPrimary3,
                 R.color.backgroundColor3
             )
+            setStatusBarColor(activity, R.color.colorPrimaryDark3)
             ViewCompat.setBackgroundTintList(activity.findViewById(R.id.gridLayout), ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.backgroundColor3)))
             activity.findViewById<LinearLayout>(R.id.rootLayout).setBackgroundColor(ContextCompat.getColor(activity, R.color.backgroundColor3))
         }
@@ -67,6 +71,7 @@ fun applyTheme(activity: MainActivity, currentTheme: Int) {
                 R.color.textColorPrimary4,
                 R.color.backgroundColor4
             )
+            setStatusBarColor(activity, R.color.colorPrimaryDark4)
             ViewCompat.setBackgroundTintList(activity.findViewById(R.id.gridLayout), ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.backgroundColor4)))
             activity.findViewById<LinearLayout>(R.id.rootLayout).setBackgroundColor(ContextCompat.getColor(activity, R.color.backgroundColor4))
         }
@@ -79,12 +84,18 @@ fun applyTheme(activity: MainActivity, currentTheme: Int) {
                 R.color.textColorPrimary1,
                 R.color.backgroundColor1
             )
+            setStatusBarColor(activity, R.color.colorPrimaryDark1)
             ViewCompat.setBackgroundTintList(activity.findViewById(R.id.gridLayout), ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.backgroundColor1)))
             activity.findViewById<LinearLayout>(R.id.rootLayout).setBackgroundColor(ContextCompat.getColor(activity, R.color.backgroundColor1))
         }
     }
 }
 
+fun setStatusBarColor(activity: MainActivity, colorResId: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        activity.window.statusBarColor = ContextCompat.getColor(activity, colorResId)
+    }
+}
 fun setButtonColors(activity: MainActivity, primaryColor: Int, primaryDarkColor: Int, accentColor: Int, textColor: Int, backgroundColor: Int) {
     val buttons = arrayOf(
         R.id.button_history, R.id.button_angle_mode, R.id.button_level, R.id.button_log,
