@@ -1,34 +1,226 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/rootLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Authentitication page"
-        android:textSize="38dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.06" />
+    android:layout_height="match_parent"
+    android:background="#FFEBCE"
+    android:orientation="vertical"
+    tools:context=".Activitis.MainActivity">
 
     <Button
-        android:id="@+id/biometric_auth"
+        android:id="@+id/showPinButton"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:text="Показать PIN"
+        android:padding="0dp"
+        android:backgroundTint="#5C4033"
+        android:onClick="showPin"
+        android:textColor="#FFEBCE"
+        android:layout_gravity="start|top"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <TextView
+        android:id="@+id/pinInputTextView"
         android:layout_width="180dp"
-        android:layout_height="60dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/round_corner_auth"
+        android:textColor="#5C4033"
+        android:clickable="false"
+        android:gravity="center"
+        android:text=""
+        android:textSize="24sp"
+        tools:ignore="MissingConstraints" />
+
+    <GridLayout
+        android:id="@+id/numberPad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="3"
+        android:rowCount="4">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="1"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="10dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="2"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="3"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="4"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="5"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="6"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="7"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="8"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="1"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="9"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_clear_all"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="2"
+            android:backgroundTint="#5C4033"
+            android:textColor="#FFEBCE"
+            android:onClick="deleteAll"
+            android:text="С"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button0"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="3"
+            android:backgroundTint="#D5BFA6"
+            android:textColor="#5C4033"
+            android:onClick="appendDigit"
+            android:text="0"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_rowWeight="2"
+            android:backgroundTint="#5C4033"
+            android:textColor="#FFEBCE"
+            android:onClick="deleteDigit"
+            android:text="⌫"
+            android:textSize="24sp" />
+    </GridLayout>
+
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Ввести PIN код"
+        android:backgroundTint="#5C4033"
+        android:textColor="#FFEBCE"
+        android:textSize="24dp"
+        android:onClick="login"
+        android:padding="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="130dp"/>
+
+    <Button
+        android:id="@+id/setPinButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Установить PIN код"
+        android:backgroundTint="#5C4033"
+        android:textColor="#FFEBCE"
+        android:textSize="24dp"
+        android:onClick="setPin"
+        android:padding="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/biometricAuthButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Вход по отпечатку"
+        android:backgroundTint="#5C4033"
+        android:textColor="#FFEBCE"
+        android:textSize="24dp"
+        android:padding="0dp"
         android:onClick="biometricAuth"
-        android:text="Auth"
-        android:textSize="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.805" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+
+        />
+</LinearLayout>

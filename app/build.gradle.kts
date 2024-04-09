@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("com.google.firebase:firebase-messaging:23.4.1")
     implementation("com.google.firebase:firebase-analytics")
